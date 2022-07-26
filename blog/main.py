@@ -43,3 +43,16 @@ def get_blog_by_id(id, response: Response, db: Session = Depends(get_db)):
         # return {"detail": f"Blog with id {id} not found"}
 
     return blog
+
+
+@app.delete("/blog/{id}", status_code=status.HTTP_204_NO_CONTENT)
+def delete_blog_by_id(id, db: Session = Depends(get_db)):
+    blog = db.query(models.Blog).filter(models.Blog.id == id).first()
+    if not blog:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND, detail=f"Blog with id {id} not found"
+        )
+
+    db.delete(blog)
+    db.commit()
+    return {"detail": "Blog deleted successfully"}
