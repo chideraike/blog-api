@@ -69,4 +69,15 @@ def delete_blog_by_id(id, db: Session = Depends(get_db)):
 
     db.delete(blog)
     db.commit()
-    return {"detail": "Blog deleted successfully"}
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
+
+
+@app.post("/user")
+def create_user(request: schemas.User, db: Session = Depends(get_db)):
+    new_user = models.User(
+        name=request.name, email=request.email, password=request.password
+    )
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+    return new_user
