@@ -25,9 +25,22 @@ class ShowUser(BaseModel):
     class Config:
         orm_mode = True
 
+class ShowUserWithoutBlogs(BaseModel):
+    name: str
+    email: str
+
+    class Config:
+        orm_mode = True
+
 
 class ShowBlog(BlogBase):
     creator: ShowUser
+
+    class Config:
+        orm_mode = True
+
+class ShowBlogs(BlogBase):
+    creator: ShowUserWithoutBlogs
 
     class Config:
         orm_mode = True

@@ -17,7 +17,7 @@ def create_blog(request: schemas.Blog, db: Session = Depends(get_db)):
     return new_blog
 
 
-@router.get("/", response_model=list[schemas.ShowBlog])
+@router.get("/", response_model=list[schemas.ShowBlogs])
 def get_blogs(db: Session = Depends(get_db)):
     blogs = db.query(models.Blog).all()
 
