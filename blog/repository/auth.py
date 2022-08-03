@@ -14,4 +14,11 @@ def login(request: schemas.Login, db: Session):
             detail="Incorrect email or password",
         )
 
+    if not Hash.verify(request.password, user.password):
+        raise HTTPException(
+            status_code=status.HTTP_406_NOT_ACCEPTABLE,
+            detail="Incorrect email or password",
+        )
+
+    # Generate a jwt token and return it
     return user
