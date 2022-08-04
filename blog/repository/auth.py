@@ -21,4 +21,5 @@ def login(request: schemas.Login, db: Session):
         )
 
     # Generate a jwt token and return it
+    
     return user
