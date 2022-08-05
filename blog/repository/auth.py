@@ -1,6 +1,6 @@
 from fastapi import HTTPException, status
 from sqlalchemy.orm import Session
-from .. import models, schemas, hashing
+from .. import models, schemas, hashing, token
 
 Hash = hashing.Hash
 
@@ -20,6 +20,6 @@ def login(request: schemas.Login, db: Session):
             detail="Incorrect email or password",
         )
 
-    # Generate a jwt token and return it
-    
-    return user
+    access_token = token.create_access_token(data={"sub": user.email})
+
+    return {"access_token": access_token, "token_type": "bearer"}
