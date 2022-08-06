@@ -6,7 +6,7 @@ Hash = hashing.Hash
 
 
 def login(request: schemas.Login, db: Session):
-    user = db.query(models.User).filter(models.User.email == request.email).first()
+    user = db.query(models.User).filter(models.User.email == request.username).first()
 
     if not user:
         raise HTTPException(
